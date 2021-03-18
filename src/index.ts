@@ -1,53 +1,10 @@
-const getDOMElement = (elem: HTMLElement | string): HTMLElement | null => {
-  if (typeof elem === "string") {
-    return document.querySelector(elem);
-  } else if (typeof elem === "object") {
-    return elem;
-  } else return null;
-}
+import { getDomElement } from "./utils/getDomElement";
+import { hasElementCorrectType } from "./utils/hasElementCorrectType";
+import { replaceLastWord, removeLastPhrase } from "./utils/re";
+import { getInnerEnding } from "./utils/getInnerEnding";
+import { getAncestorBottomCoords } from "./utils/getAncestorBottomCoords";
+import { TruncatorParams } from "./interfaces/types";
 
-const getInnerEnding = (ending: HTMLElement | string): string => {
-  if (typeof ending === "string") {
-    return ending;
-  } else if (!ending.innerText) {
-    return " ";
-  }
-  return ending.innerText;
-}
-
-const replaceLastWord = (re: RegExp, text: string): string => text.replace(re, "$2");
-
-const removeLastPhrase = (re: RegExp, text: string): string => text.replace(re, "");
-
-const getAncestorBottomCoords = (nodeRef: HTMLElement, ancestorRef: HTMLElement): number | null => {
-  let ancestorRefAttr = ancestorRef.tagName.toLowerCase();
-  ancestorRefAttr += ancestorRef.id && `#${ancestorRef.id}`;
-  ancestorRefAttr += ancestorRef.className && `.${ancestorRef.className}`;
-  const closestAncestor = nodeRef.closest(ancestorRefAttr);
-  return closestAncestor ? closestAncestor.getBoundingClientRect().bottom : null
-}
-
-const hasElementCorrectType = (elem: HTMLElement | string): boolean =>
-  typeof elem !== "string" && !elem.tagName && elem.nodeType !== 1
-
-interface TruncatorParams {
-  sourceNode: HTMLElement | string,
-  sourceAncestor: HTMLElement | string,
-  ending: HTMLElement | string,
-  options: {
-    maxLength?: number,
-    minCutLength?: number,
-    delay?: number,
-  }
-}
-
-/**
- * @param sourceNode {Node | string} исхожный DOM-элемент в котором происходит обрезка текста
- * @param sourceAncestor {Node | string} родитель исходного DOM-элемента, по которому происходит подсчет допустимого текста
- * @param ending {Node | string} окончание текста - может быть либо строкой, либо DOM-элементом
- * @param options {Object} объект с дополнительными параметрами
- * @return {Function}
- */
 const truncator = ({
   sourceNode,
   sourceAncestor = "body",
@@ -61,9 +18,9 @@ const truncator = ({
   if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
     throw new Error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
   }
-  const nodeRef = getDOMElement(sourceNode);
+  const nodeRef = getDomElement(sourceNode);
   if (nodeRef === null) return null;
-  const ancestorRef = getDOMElement(sourceAncestor);
+  const ancestorRef = getDomElement(sourceAncestor);
   if (ancestorRef === null) return null;
 
   const reserve = 5;
