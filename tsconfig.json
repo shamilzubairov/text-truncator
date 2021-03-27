@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "declaration": true,
-    "module": "umd",
+    "module": "es2015",
     "lib": ["ES2015", "DOM"],
     "sourceMap": true,
     "outDir": "dist",
