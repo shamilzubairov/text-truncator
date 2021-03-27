@@ -104,5 +104,3 @@ export const truncator = ({
 
   return stopTruncator;
 };
-
-export default truncator;
