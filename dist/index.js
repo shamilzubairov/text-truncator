@@ -9,6 +9,7 @@
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.truncator = void 0;
     var getDomElement_1 = require("./utils/getDomElement");
     var hasElementCorrectType_1 = require("./utils/hasElementCorrectType");
     var re_1 = require("./utils/re");
@@ -97,6 +98,6 @@
         }
         return stopTruncator;
     };
-    exports.default = truncator;
+    exports.truncator = truncator;
 });
 //# sourceMappingURL=index.js.map
