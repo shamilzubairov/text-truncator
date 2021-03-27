@@ -1,4 +1,4 @@
-# Truncator 1.0.4v (beta)
+# Truncator 1.0.5v (beta)
 
 This library will help you crop text that does not fit into the container and replace it by some ending.
 
