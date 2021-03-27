@@ -5,7 +5,7 @@ import { getInnerEnding } from "./utils/getInnerEnding";
 import { getAncestorBottomCoords } from "./utils/getAncestorBottomCoords";
 import { TruncatorParams } from "./interfaces/types";
 
-const truncator = ({
+export const truncator = ({
   sourceNode,
   sourceAncestor = "body",
   ending,
