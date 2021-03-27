@@ -1,8 +1,9 @@
 {
-  "name": "truncator",
+  "name": "text-truncator",
   "version": "1.0.0",
   "description": "This library will help you crop text that does not fit into the container.",
   "main": "dist/index.js",
+  "types": "dist/index.d.js",
   "directories": {
     "src": "src"
   },
@@ -14,10 +15,26 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node ./test/index.test.js",
-    "prepublish": "npm test"
+    "prepublishOnly": "tsc -d"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shamilzubairov/text-truncator.git"
+  },
+  "keywords": [
+    "truncate",
+    "truncator",
+    "text-truncator",
+    "text truncator"
+  ],
   "author": "Shamil Zubairov",
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "dist/*",
+    "LICENSE.txt",
+    "package.json",
+    "README.md",
+    "tsconfig.json",
+    "tslint.json"
+  ]
 }

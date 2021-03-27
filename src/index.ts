@@ -18,6 +18,10 @@ const truncator = ({
   if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
     throw new Error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
   }
+  if (typeof ending !== "string" && !ending.tagName && ending.nodeType !== 1) {
+    throw new Error("Ending must string or Node");
+  }
+
   const nodeRef = getDomElement(sourceNode);
   if (nodeRef === null) return null;
   const ancestorRef = getDomElement(sourceAncestor);
@@ -34,10 +38,6 @@ const truncator = ({
   const maxLength = options.maxLength || Infinity;
   const minCutLength = options.minCutLength || 0;
   const delay = options.delay || 100;
-
-  if (typeof ending !== "string" && !ending.tagName && ending.nodeType !== 1) {
-    throw new Error("Ending must string or Node");
-  }
 
   const sourceEnding = " " + (typeof ending === "string" ? ending : ending.outerHTML); // with tags, for final ending
   const innerEndingStringForRe = getInnerEnding(ending).trim(); // without tags, only for RegExp
@@ -57,14 +57,14 @@ const truncator = ({
 
   const handleResizeClb = handleResize();
 
-  function closeTruncator() {
+  function stopTruncator() {
     window.removeEventListener("resize", handleResizeClb);
     cancelAnimationFrame(rafId);
   }
   
   window.addEventListener("resize", handleResizeClb);
 
-  window.addEventListener("beforeunload", () => closeTruncator());
+  window.addEventListener("beforeunload", () => stopTruncator());
 
   truncateText();
 
@@ -102,7 +102,7 @@ const truncator = ({
     });
   }
 
-  return closeTruncator;
+  return stopTruncator;
 };
 
 export default truncator;

@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "declaration": true,
+    "module": "umd",
     "lib": ["ES2015", "DOM"],
-    "allowJs": false,
-    "checkJs": false,
     "sourceMap": true,
     "outDir": "dist",
     "strict": true,

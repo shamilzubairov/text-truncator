@@ -13,26 +13,31 @@ npm install truncator
 
 ```js / ts
 import truncator from 'truncator'
-
 ...
 
 /**
- * @param sourceNode {Node | string} исхожный DOM-элемент в котором происходит обрезка текста
- * @param sourceAncestor {Node | string} родитель исходного DOM-элемента, по которому происходит подсчет допустимого текста
- * @param ending {Node | string} окончание текста - может быть либо строкой, либо DOM-элементом
- * @param options {Object} объект с дополнительными параметрами
- * @return {Function}
+ * @param {(HTMLElement|string)} sourceNode - Source element which contains truncated text
+ * @param {(HTMLElement|string)} [sourceAncestor=body] - Parent node of the source element or body tag by default
+ * @param {(HTMLElement|string)} [ending=...] - Ending of the text or `...` by default
+ * @param {Options} options - Object {@link SettingOptions} with additional parameters
+ * @return {Function} - Closing function
+ * 
+ * @typedef {Object} SettingOptions
+ * @property {number} [maxLength=Infinity] - The maximum number of letters that we want to be shown before truncate
+ * @property {number} [minCutLength=0] - The maximum number of letters after which the text completely disappears
+ * @property {number} [delay=100] - Time (in millisec) to delay animation of truncate. Inside itself truncator uses the throttling function
  */
 truncator = ({
   sourceNode,
-  sourceAncestor = "body",
-  ending,
+  sourceAncestor = ".parentDiv",
+  ending = "read mode...",
   options = {
-    maxLength: Infinity,
-    minCutLength: 0,
-    delay: 100,
+    maxLength: 700,
+    delay: 250,
   }
 }:
 ```
+
+To use in SPA it returns closing function which can be called before a component will be removed from the DOM.
 
 
