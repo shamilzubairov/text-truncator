@@ -5,7 +5,7 @@ import { getInnerEnding } from "./utils/getInnerEnding";
 import { getAncestorBottomCoords } from "./utils/getAncestorBottomCoords";
 import { TruncatorParams } from "./interfaces/types";
 
-const truncator = ({
+export default function truncator({
   sourceNode,
   sourceAncestor = "body",
   ending,
@@ -14,7 +14,7 @@ const truncator = ({
     minCutLength: 0,
     delay: 100,
   }
-}: TruncatorParams): (() => void) | never | null => {
+}: TruncatorParams): (() => void) | never | null {
   if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
     throw new Error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
   }
@@ -104,5 +104,3 @@ const truncator = ({
 
   return stopTruncator;
 };
-
-export default truncator;
