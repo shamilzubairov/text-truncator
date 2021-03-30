@@ -12,7 +12,7 @@ npm install truncator
 ## Usage
 
 ```js / ts
-import truncator from 'truncator'
+import truncator from 'text-truncator'
 ...
 
 /**
