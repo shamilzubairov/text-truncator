@@ -1,6 +1,6 @@
 {
   "name": "text-truncator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "This library will help you crop text that does not fit into the container.",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
@@ -15,7 +15,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "prepublishOnly": "tsc -d"
+    "prepublishOnly": "rm -rf dist && tsc"
   },
   "repository": {
     "type": "git",
