@@ -1,4 +1,4 @@
-# Truncator 1.0.7v (beta)
+# Truncator 1.0.9v (beta)
 
 This library will help you crop text that does not fit into the container and replace it by some ending.
 
@@ -7,7 +7,7 @@ This library will help you crop text that does not fit into the container and re
 ## Installation
 
 ```sh
-npm install truncator
+npm install text-truncator
 ```
 ## Usage
 
