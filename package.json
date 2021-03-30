@@ -1,6 +1,6 @@
 {
   "name": "text-truncator",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "This library will help you crop text that does not fit into the container.",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
@@ -24,8 +24,8 @@
   "keywords": [
     "truncate",
     "truncator",
-    "text-truncator",
-    "text truncator"
+    "textTruncator",
+    "text"
   ],
   "author": "Shamil Zubairov",
   "license": "MIT",
