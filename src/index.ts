@@ -8,7 +8,7 @@ import { TruncatorParams } from "./interfaces/types";
 export default function truncator({
   sourceNode,
   sourceAncestor = "body",
-  ending,
+  ending = "...",
   options = {
     maxLength: Infinity,
     minCutLength: 0,

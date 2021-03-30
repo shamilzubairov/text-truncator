@@ -1,4 +1,4 @@
-# Text-truncator 1.0.10v (beta)
+# Text-truncator 1.0.11v (beta)
 
 This library will help you crop text that does not fit into the container and replace it by some ending.
 
@@ -27,7 +27,7 @@ import truncator from 'text-truncator'
  * @property {number} [minCutLength=0] - The maximum number of letters after which the text completely disappears
  * @property {number} [delay=100] - Time (in millisec) to delay animation of truncate. Inside itself truncator uses the throttling function
  */
-truncator = ({
+const closeTruncator = truncator({
   sourceNode,
   sourceAncestor = ".parentDiv",
   ending = "read mode...",
@@ -35,9 +35,19 @@ truncator = ({
     maxLength: 700,
     delay: 250,
   }
-}:
+});
 ```
 
 To use in SPA it returns closing function which can be called before a component will be removed from the DOM.
 
-
+```
+...
+useEffect(() => {
+  ...
+  return () => {
+    closeTruncator()
+    ...
+  }
+})
+...
+```
