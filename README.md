@@ -1,4 +1,4 @@
-# Text-truncator 1.1.0v (beta)
+# Text-truncator 1.2.0v (beta)
 
 Universal library that makes a lot of text truncated in a small parent container.
 

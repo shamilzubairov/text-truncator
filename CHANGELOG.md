@@ -1,5 +1,10 @@
 # Change log
 
+## v1.2.0-beta (2021-04-1)
+
+### Add new package
+- **add rollup for example module**
+
 ## v1.1.0-beta (2021-04-1)
 
 ### Add new files
