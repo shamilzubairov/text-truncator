@@ -1,4 +1,4 @@
-# Text-truncator 1.2.0v (beta)
+# Text-truncator 1.2.1v (beta)
 
 Universal library that makes a lot of text truncated in a small parent container.
 
@@ -15,34 +15,24 @@ npm install text-truncator
 ## Usage
 
 ```js / ts
+
 ...
 
-/**
- * @param {(HTMLElement|string)} sourceNode - Source element which contains truncated text
- * @param {(HTMLElement|string)} [sourceAncestor=body] - Parent node of the source element or body tag by default
- * @param {(HTMLElement|string)} [ending=...] - Ending of the text or `...` by default
- * @param {Options} options - Object {@link SettingOptions} with additional parameters
- * @return {Function} - Closing function
- * 
- * @typedef {Object} SettingOptions
- * @property {number} [maxLength=Infinity] - The maximum number of letters that we want to be shown before truncate
- * @property {number} [minCutLength=0] - The maximum number of letters after which the text completely disappears
- * @property {number} [delay=100] - Time (in millisec) to delay animation of truncate. Inside itself truncator uses the throttling function
- */
 const stopTruncator = truncator({
-  sourceNode,
-  sourceAncestor = ".parentDiv",
-  ending = "read mode...",
+  sourceNode, // Required! Use CSS selectors (string) or HTML element
+  sourceAncestor = ".parentDiv", // Use CSS selectors (string) or HTML element. By default it uses "body"
+  ending = "read mode...",  // Use CSS selectors (string) or HTML element. By default it uses ...
   options = {
-    maxLength: 700,
-    delay: 250,
+    maxLength: 700, // The maximum number of letters that we want to be shown before truncate. By default it uses Infinity
+    minCutLength: 100, // The maximum number of letters after which the text completely disappears. By default it uses 0
+    delay: 250, // Time (in millisec) to delay animation of truncate. Inside itself truncator uses the throttling function. By default it uses 100
   }
 });
 ```
 
 To use in SPA it returns closing function which can be called before a component will be removed from the DOM.
 
-```
+```js / ts
 ...
 useEffect(() => {
   ...
@@ -53,3 +43,7 @@ useEffect(() => {
 })
 ...
 ```
+
+## Ending
+If you use string for ending character you cannot to use special chars except this . , ! ? > -
+This is for security reasons.

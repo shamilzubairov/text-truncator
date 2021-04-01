@@ -1,6 +1,8 @@
+const removeSpecChars = (elem) => elem.replace(/[^a-zA-Z .,!?>-]/g, "").trim();
+
 const getDomElement = (elem) => {
     if (typeof elem === "string") {
-        return document.querySelector(elem);
+        return document.querySelector(removeSpecChars(elem));
     }
     else if (typeof elem === "object") {
         return elem;
@@ -16,7 +18,7 @@ const removeLastPhrase = (re, text) => text.replace(re, "");
 
 const getInnerEnding = (ending) => {
     if (typeof ending === "string") {
-        return ending;
+        return removeSpecChars(ending);
     }
     else if (!ending.innerText) {
         return " ";
@@ -40,9 +42,6 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
     if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
         throw new Error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
     }
-    if (typeof ending !== "string" && !ending.tagName && ending.nodeType !== 1) {
-        throw new Error("Ending must string or Node");
-    }
     const nodeRef = getDomElement(sourceNode);
     if (nodeRef === null)
         return null;
@@ -59,7 +58,7 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
     const maxLength = options.maxLength || Infinity;
     const minCutLength = options.minCutLength || 0;
     const delay = options.delay || 100;
-    const sourceEnding = " " + (typeof ending === "string" ? ending : ending.outerHTML); // with tags, for final ending
+    const sourceEnding = " " + (typeof ending === "string" ? removeSpecChars(ending) : ending.outerHTML); // with tags, for final ending
     const innerEndingStringForRe = getInnerEnding(ending).trim(); // without tags, only for RegExp
     const reLastWord = new RegExp(`(\\s*\\S*)(\\s+${(innerEndingStringForRe)})$`);
     const reLastPhrase = new RegExp(`(\\s+${(innerEndingStringForRe)})$`);
@@ -116,4 +115,5 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
 
 truncator({
     sourceNode: "p",
+    ending: "Hello..."
 });

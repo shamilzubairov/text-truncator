@@ -1,5 +1,13 @@
 # Change log
 
+## v1.2.1-beta (2021-04-1)
+
+### Allowing chars
+- **limit max using spec chars**
+
+### Bug Fixes
+- **fix bug with infinite loop**
+
 ## v1.2.0-beta (2021-04-1)
 
 ### Add new package

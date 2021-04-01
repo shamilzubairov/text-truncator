@@ -1,6 +1,7 @@
 import { getDomElement } from "./utils/getDomElement";
 import { hasElementCorrectType } from "./utils/hasElementCorrectType";
 import { replaceLastWord, removeLastPhrase } from "./utils/re";
+import { removeSpecChars } from "./utils/removeSpecChars";
 import { getInnerEnding } from "./utils/getInnerEnding";
 import { getAncestorBottomCoords } from "./utils/getAncestorBottomCoords";
 export default function truncator({ sourceNode, sourceAncestor = "body", ending = "...", options = {
@@ -10,9 +11,6 @@ export default function truncator({ sourceNode, sourceAncestor = "body", ending 
 } }) {
     if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
         throw new Error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
-    }
-    if (typeof ending !== "string" && !ending.tagName && ending.nodeType !== 1) {
-        throw new Error("Ending must string or Node");
     }
     const nodeRef = getDomElement(sourceNode);
     if (nodeRef === null)
@@ -30,7 +28,7 @@ export default function truncator({ sourceNode, sourceAncestor = "body", ending 
     const maxLength = options.maxLength || Infinity;
     const minCutLength = options.minCutLength || 0;
     const delay = options.delay || 100;
-    const sourceEnding = " " + (typeof ending === "string" ? ending : ending.outerHTML); // with tags, for final ending
+    const sourceEnding = " " + (typeof ending === "string" ? removeSpecChars(ending) : ending.outerHTML); // with tags, for final ending
     const innerEndingStringForRe = getInnerEnding(ending).trim(); // without tags, only for RegExp
     const reLastWord = new RegExp(`(\\s*\\S*)(\\s+${(innerEndingStringForRe)})$`);
     const reLastPhrase = new RegExp(`(\\s+${(innerEndingStringForRe)})$`);

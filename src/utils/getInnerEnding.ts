@@ -1,6 +1,8 @@
+import { removeSpecChars } from "./removeSpecChars";
+
 export const getInnerEnding = (ending: HTMLElement | string): string => {
   if (typeof ending === "string") {
-    return ending;
+    return removeSpecChars(ending);
   } else if (!ending.innerText) {
     return " ";
   }
