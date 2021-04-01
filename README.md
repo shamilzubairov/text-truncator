@@ -15,6 +15,7 @@ npm install text-truncator
 ## Usage
 
 ```js / ts
+import truncator from 'text-truncator'
 
 ...
 
@@ -45,5 +46,5 @@ useEffect(() => {
 ```
 
 ## Ending
-If you use string for ending character you cannot to use special chars except this . , ! ? > -
-This is for security reasons.
+If you use string for ending character you cannot to use special chars except this ```. , ! ? > -```
+This is for security reasons and error avoiding.
