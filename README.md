@@ -46,5 +46,5 @@ useEffect(() => {
 ```
 
 ## Ending
-If you use string for ending character you cannot to use special chars except this ```. , ! ? > -```
+If you use a string as the ending character you cannot use special chars except this ```. , ! ? > -```.
 This is for security reasons and error avoiding.
