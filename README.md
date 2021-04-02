@@ -1,4 +1,4 @@
-# Text-truncator 1.2.1v (beta)
+# Text-truncator 1.2.2v
 
 Universal library that makes a lot of text truncated in a small parent container.
 
@@ -20,10 +20,10 @@ import truncator from 'text-truncator'
 ...
 
 const stopTruncator = truncator({
-  sourceNode, // Required! Use CSS selectors (string) or HTML element
-  sourceAncestor = ".parentDiv", // Use CSS selectors (string) or HTML element. By default it uses "body"
-  ending = "read mode...",  // Use CSS selectors (string) or HTML element. By default it uses ...
-  options = {
+  sourceNode: "h3", // Required! Use CSS selectors (string) or HTML element
+  sourceAncestor: ".parentDiv", // Use CSS selectors (string) or HTML element. By default it uses "body"
+  ending: "read mode...",  // Use CSS selectors (string) or HTML element. By default it uses ...
+  options: {
     maxLength: 700, // The maximum number of letters that we want to be shown before truncate. By default it uses Infinity
     minCutLength: 100, // The maximum number of letters after which the text completely disappears. By default it uses 0
     delay: 250, // Time (in millisec) to delay animation of truncate. Inside itself truncator uses the throttling function. By default it uses 100

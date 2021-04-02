@@ -1,5 +1,11 @@
 # Change log
 
+## v1.2.2 (2021-04-1)
+
+### Bug Fixes
+- **fix bug with special chars**
+- **add endless loop protection**
+
 ## v1.2.1-beta (2021-04-1)
 
 ### Allowing chars

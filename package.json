@@ -1,6 +1,6 @@
 {
   "name": "text-truncator",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Universal library that makes a lot of text truncated in a small parent container.",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
@@ -16,10 +16,10 @@
     "mocha": "^8.3.2"
   },
   "scripts": {
-    "prepublishOnly": "npm test && npm run build",
     "build": "rm -rf dist && tsc",
     "start:exm": "http-server ./example",
     "build:exm": "tsc --build tsconfig.exm.json && rollup example/main.js --file example/bundle.js",
+    "prepublishOnly": "npm test && npm run build",
     "test": "mocha"
   },
   "repository": {
