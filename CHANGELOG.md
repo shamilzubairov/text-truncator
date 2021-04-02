@@ -5,6 +5,7 @@
 ### Bug Fixes
 - **fix bug with special chars**
 - **add endless loop protection**
+- **add once parameter for call truncator just once**
 
 ## v1.2.1-beta (2021-04-1)
 

@@ -6,5 +6,6 @@ export interface TruncatorParams {
     maxLength?: number,
     minCutLength?: number,
     delay?: number,
+    once?: boolean,
   }
 }

@@ -10,11 +10,7 @@ export default function truncator({
   sourceNode,
   sourceAncestor = "body",
   ending = "...",
-  options = {
-    maxLength: Infinity,
-    minCutLength: 0,
-    delay: 100,
-  }
+  options = {}
 }: TruncatorParams): (() => void) | never | null {
   if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
     console.error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
@@ -39,6 +35,7 @@ export default function truncator({
   const maxLength = options.maxLength || Infinity;
   const minCutLength = options.minCutLength || 0;
   const delay = options.delay || 100;
+  const once = options.once || false;
 
   const sourceEnding = " " + (typeof ending === "string" ? removeSpecChars(ending) : ending.outerHTML); // with tags, for final ending
 
@@ -64,7 +61,9 @@ export default function truncator({
     cancelAnimationFrame(rafId);
   }
   
-  window.addEventListener("resize", handleResizeClb);
+  if (!once) {
+    window.addEventListener("resize", handleResizeClb);
+  }
 
   window.addEventListener("beforeunload", () => stopTruncator());
 

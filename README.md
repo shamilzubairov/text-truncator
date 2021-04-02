@@ -2,6 +2,8 @@
 
 Universal library that makes a lot of text truncated in a small parent container.
 
+`text-truncator` listened by resize event for applied every time when page is resized. You can turn this option off by provide in parameter `options` boolean property `once` is true.
+
 [MIT License](LICENSE.txt)
 
 ## Attention!
@@ -27,6 +29,7 @@ const stopTruncator = truncator({
     maxLength: 700, // The maximum number of letters that we want to be shown before truncate. By default it uses Infinity
     minCutLength: 100, // The maximum number of letters after which the text completely disappears. By default it uses 0
     delay: 250, // Time (in millisec) to delay animation of truncate. Inside itself truncator uses the throttling function. By default it uses 100
+    once: true // Needs to call truncator just one time without adding listener to resize event. By default it equals false
   }
 });
 ```

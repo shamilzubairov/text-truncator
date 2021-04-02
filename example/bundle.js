@@ -19,7 +19,6 @@ const hasElementCorrectType = (elem) => (typeof elem === "string") || (!!elem.ta
 const replaceLastWord = (re, text) => text.replace(re, "$2");
 const removeLastPhrase = (re, text) => text.replace(re, "");
 
-// export const removeSpecChars = (elem: string) => elem.replace(/[^a-zA-Z .,:;!?#()>-]/g, "").trim();
 const removeSpecChars = (elem) => elem.replace(/[<()^*$]/g, "").trim();
 
 const getInnerEnding = (ending) => {
@@ -40,11 +39,7 @@ const getAncestorBottomCoords = (nodeRef, ancestorRef) => {
     return closestAncestor ? closestAncestor.getBoundingClientRect().bottom : null;
 };
 
-function truncator({ sourceNode, sourceAncestor = "body", ending = "...", options = {
-    maxLength: Infinity,
-    minCutLength: 0,
-    delay: 100,
-} }) {
+function truncator({ sourceNode, sourceAncestor = "body", ending = "...", options = {} }) {
     if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
         console.error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
         return null;
@@ -65,6 +60,7 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
     const maxLength = options.maxLength || Infinity;
     const minCutLength = options.minCutLength || 0;
     const delay = options.delay || 100;
+    const once = options.once || false;
     const sourceEnding = " " + (typeof ending === "string" ? removeSpecChars(ending) : ending.outerHTML); // with tags, for final ending
     const innerEndingStringForRe = getInnerEnding(ending).trim(); // without tags, only for RegExp
     const reLastWord = new RegExp(`(\\s*\\S*)(\\s+${(innerEndingStringForRe)})$`);
@@ -84,7 +80,9 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
         window.removeEventListener("resize", handleResizeClb);
         cancelAnimationFrame(rafId);
     }
-    window.addEventListener("resize", handleResizeClb);
+    if (!once) {
+        window.addEventListener("resize", handleResizeClb);
+    }
     window.addEventListener("beforeunload", () => stopTruncator());
     truncateText();
     function truncateText() {
@@ -109,7 +107,7 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
             while (nodeRef.getBoundingClientRect().bottom > ancestorBottomCoords) {
                 const nodeRefBeforeTruncate = nodeRef.innerText;
                 nodeRef.innerText = replaceLastWord(reLastWord, nodeRef.innerText);
-                // defensive of the infinite loop
+                // endless loop protection
                 if (nodeRefBeforeTruncate.length <= nodeRef.innerText.length)
                     return;
                 if (minCutLength && nodeRef.innerText.length <= minCutLength) {
@@ -128,4 +126,7 @@ truncator({
     sourceNode: "p",
     sourceAncestor: ".app",
     ending: "read more...",
+    options: {
+        once: true
+    }
 });

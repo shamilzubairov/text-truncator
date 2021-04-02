@@ -4,11 +4,7 @@ import { replaceLastWord, removeLastPhrase } from "./utils/re";
 import { removeSpecChars } from "./utils/removeSpecChars";
 import { getInnerEnding } from "./utils/getInnerEnding";
 import { getAncestorBottomCoords } from "./utils/getAncestorBottomCoords";
-export default function truncator({ sourceNode, sourceAncestor = "body", ending = "...", options = {
-    maxLength: Infinity,
-    minCutLength: 0,
-    delay: 100,
-} }) {
+export default function truncator({ sourceNode, sourceAncestor = "body", ending = "...", options = {} }) {
     if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
         console.error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
         return null;
@@ -29,6 +25,7 @@ export default function truncator({ sourceNode, sourceAncestor = "body", ending 
     const maxLength = options.maxLength || Infinity;
     const minCutLength = options.minCutLength || 0;
     const delay = options.delay || 100;
+    const once = options.once || false;
     const sourceEnding = " " + (typeof ending === "string" ? removeSpecChars(ending) : ending.outerHTML); // with tags, for final ending
     const innerEndingStringForRe = getInnerEnding(ending).trim(); // without tags, only for RegExp
     const reLastWord = new RegExp(`(\\s*\\S*)(\\s+${(innerEndingStringForRe)})$`);
@@ -48,7 +45,9 @@ export default function truncator({ sourceNode, sourceAncestor = "body", ending 
         window.removeEventListener("resize", handleResizeClb);
         cancelAnimationFrame(rafId);
     }
-    window.addEventListener("resize", handleResizeClb);
+    if (!once) {
+        window.addEventListener("resize", handleResizeClb);
+    }
     window.addEventListener("beforeunload", () => stopTruncator());
     truncateText();
     function truncateText() {
@@ -74,7 +73,7 @@ export default function truncator({ sourceNode, sourceAncestor = "body", ending 
             while (nodeRef.getBoundingClientRect().bottom > ancestorBottomCoords) {
                 const nodeRefBeforeTruncate = nodeRef.innerText;
                 nodeRef.innerText = replaceLastWord(reLastWord, nodeRef.innerText);
-                // defensive of the infinite loop
+                // endless loop protection
                 if (nodeRefBeforeTruncate.length <= nodeRef.innerText.length)
                     return;
                 if (minCutLength && nodeRef.innerText.length <= minCutLength) {

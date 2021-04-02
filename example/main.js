@@ -4,4 +4,7 @@ tc({
     sourceNode: "p",
     sourceAncestor: ".app",
     ending: "read more...",
+    options: {
+        once: true
+    }
 })
