@@ -10,14 +10,15 @@ export default function truncator({ sourceNode, sourceAncestor = "body", ending 
     delay: 100,
 } }) {
     if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
-        throw new Error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
+        console.error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
+        return null;
     }
     const nodeRef = getDomElement(sourceNode);
-    if (nodeRef === null)
-        return null;
     const ancestorRef = getDomElement(sourceAncestor);
-    if (ancestorRef === null)
+    if (nodeRef === null || ancestorRef === null) {
+        console.error(`${sourceNode} or ${sourceAncestor} are not DOM elements`);
         return null;
+    }
     const reserve = 5;
     let ancestorBottomCoords = getAncestorBottomCoords(nodeRef, ancestorRef);
     if (ancestorBottomCoords === null)
@@ -71,7 +72,11 @@ export default function truncator({ sourceNode, sourceAncestor = "body", ending 
                 return;
             nodeRef.innerHTML += sourceEnding;
             while (nodeRef.getBoundingClientRect().bottom > ancestorBottomCoords) {
+                const nodeRefBeforeTruncate = nodeRef.innerText;
                 nodeRef.innerText = replaceLastWord(reLastWord, nodeRef.innerText);
+                // defensive of the infinite loop
+                if (nodeRefBeforeTruncate.length <= nodeRef.innerText.length)
+                    return;
                 if (minCutLength && nodeRef.innerText.length <= minCutLength) {
                     nodeRef.innerText = "";
                     return;

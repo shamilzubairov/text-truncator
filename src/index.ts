@@ -17,13 +17,16 @@ export default function truncator({
   }
 }: TruncatorParams): (() => void) | never | null {
   if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
-    throw new Error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
+    console.error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
+    return null;
   }
 
   const nodeRef = getDomElement(sourceNode);
-  if (nodeRef === null) return null;
   const ancestorRef = getDomElement(sourceAncestor);
-  if (ancestorRef === null) return null;
+  if (nodeRef === null || ancestorRef === null) {
+    console.error(`${sourceNode} or ${sourceAncestor} are not DOM elements`);
+    return null;
+  }
 
   const reserve = 5;
   let ancestorBottomCoords = getAncestorBottomCoords(nodeRef, ancestorRef);
@@ -38,6 +41,7 @@ export default function truncator({
   const delay = options.delay || 100;
 
   const sourceEnding = " " + (typeof ending === "string" ? removeSpecChars(ending) : ending.outerHTML); // with tags, for final ending
+
   const innerEndingStringForRe = getInnerEnding(ending).trim(); // without tags, only for RegExp
   const reLastWord = new RegExp(`(\\s*\\S*)(\\s+${(innerEndingStringForRe)})$`);
   const reLastPhrase = new RegExp(`(\\s+${(innerEndingStringForRe)})$`);
@@ -88,7 +92,10 @@ export default function truncator({
       
       nodeRef.innerHTML += sourceEnding;
       while (nodeRef.getBoundingClientRect().bottom > ancestorBottomCoords!) {
+        const nodeRefBeforeTruncate = nodeRef.innerText;
         nodeRef.innerText = replaceLastWord(reLastWord, nodeRef.innerText);
+        // endless loop protection
+        if (nodeRefBeforeTruncate.length <= nodeRef.innerText.length) return;
 
         if (minCutLength && nodeRef.innerText.length <= minCutLength) {
           nodeRef.innerText = "";
