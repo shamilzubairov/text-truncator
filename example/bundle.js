@@ -1,20 +1,26 @@
-const removeSpecChars = (elem) => elem.replace(/[^a-zA-Z .,!?>-]/g, "").trim();
-
 const getDomElement = (elem) => {
-    if (typeof elem === "string") {
-        return document.querySelector(removeSpecChars(elem));
+    try {
+        if (typeof elem === "string") {
+            return document.querySelector(elem);
+        }
+        else if (typeof elem === "object") {
+            return elem;
+        }
+        else
+            return null;
     }
-    else if (typeof elem === "object") {
-        return elem;
-    }
-    else
+    catch (e) {
         return null;
+    }
 };
 
 const hasElementCorrectType = (elem) => (typeof elem === "string") || (!!elem.tagName && elem.nodeType === 1);
 
 const replaceLastWord = (re, text) => text.replace(re, "$2");
 const removeLastPhrase = (re, text) => text.replace(re, "");
+
+// export const removeSpecChars = (elem: string) => elem.replace(/[^a-zA-Z .,:;!?#()>-]/g, "").trim();
+const removeSpecChars = (elem) => elem.replace(/[<()^*$]/g, "").trim();
 
 const getInnerEnding = (ending) => {
     if (typeof ending === "string") {
@@ -40,14 +46,15 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
     delay: 100,
 } }) {
     if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
-        throw new Error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
+        console.error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
+        return null;
     }
     const nodeRef = getDomElement(sourceNode);
-    if (nodeRef === null)
-        return null;
     const ancestorRef = getDomElement(sourceAncestor);
-    if (ancestorRef === null)
+    if (nodeRef === null || ancestorRef === null) {
+        console.error(`${sourceNode} or ${sourceAncestor} are not DOM elements`);
         return null;
+    }
     const reserve = 5;
     let ancestorBottomCoords = getAncestorBottomCoords(nodeRef, ancestorRef);
     if (ancestorBottomCoords === null)
@@ -100,7 +107,11 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
                 return;
             nodeRef.innerHTML += sourceEnding;
             while (nodeRef.getBoundingClientRect().bottom > ancestorBottomCoords) {
+                const nodeRefBeforeTruncate = nodeRef.innerText;
                 nodeRef.innerText = replaceLastWord(reLastWord, nodeRef.innerText);
+                // defensive of the infinite loop
+                if (nodeRefBeforeTruncate.length <= nodeRef.innerText.length)
+                    return;
                 if (minCutLength && nodeRef.innerText.length <= minCutLength) {
                     nodeRef.innerText = "";
                     return;
@@ -115,5 +126,6 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
 
 truncator({
     sourceNode: "p",
-    ending: "Hello..."
+    sourceAncestor: ".app",
+    ending: "read more...",
 });

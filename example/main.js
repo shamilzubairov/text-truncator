@@ -2,5 +2,6 @@ import tc from "./dist/index.js";
 
 tc({
     sourceNode: "p",
-    ending: "Hello..."
+    sourceAncestor: ".app",
+    ending: "read more...",
 })
