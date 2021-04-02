@@ -122,8 +122,16 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
     return stopTruncator;
 }
 
+const anchor = document.createElement("a");
+anchor.href = "https://ya.ru";
+anchor.target = "_blank";
+anchor.innerHTML = "<>>> read more...";
+
 truncator({
     sourceNode: "p",
-    sourceAncestor: ".app",
-    ending: "read more...",
+    ending: anchor,
+    options: {
+      minCutLength: 100
+      // once: true
+    }
 });
