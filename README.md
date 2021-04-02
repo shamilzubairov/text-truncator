@@ -1,4 +1,4 @@
-# Text-truncator 1.2.3v
+# Text-truncator 1.2.4v
 
 Universal library that makes a lot of text truncated in a small parent container.
 
@@ -49,5 +49,4 @@ useEffect(() => {
 ```
 
 ## Ending
-If you use a string as the ending character don't use special chars like this `< \ ( ) ^ * $`
-This can lead to errors.
+If you use a string as the ending character don't use special chars like these `< \ ( ) ^ * $` as this can lead to incorrect results.

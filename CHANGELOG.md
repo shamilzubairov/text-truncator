@@ -1,5 +1,9 @@
 # Change log
 
+## v1.2.3 (2021-04-1)
+
+### Alfa version starts
+
 ## v1.2.2 (2021-04-1)
 
 ### Bug Fixes
