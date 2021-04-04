@@ -1,5 +1,10 @@
 # Change log
 
+## v1.2.6 (2021-04-1)
+
+### Main params
+- **make params default except first**
+
 ## v1.2.3 (2021-04-1)
 
 ### Alfa version starts
