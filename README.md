@@ -2,9 +2,6 @@
 
 Universal library that makes a lot of text truncated in a small parent container.
 
-`text-truncator` listened by resize event for applied every time when page is resized. 
-You can turn this option off by provide in parameter `options` boolean property `once` is true.
-
 [MIT License](LICENSE.txt)
 
 ## Attention!
@@ -22,7 +19,7 @@ What if you need to truncate a part of the text inside the paragraph element tha
 ...
 <body>
     <div class="app">
-        <h1>This is test of package</h1>
+        <h1>This is a test</h1>
         <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
 </body>
@@ -33,9 +30,9 @@ For that you use `truncator` as shown further:
 ```js / ts
 import truncator from 'text-truncator'
 ...
-const stopTruncator = truncator({
+truncator({
   sourceNode: ".text", // or just `p` (like a tag) or document.querySelector('.text') - you may provide also HTML element 
-  sourceAncestor: ".app", // or just `div` (if its only parent tag) or document.querySelector('.app')
+  sourceAncestor: ".app", // or just `div` (if it's only parent tag) or document.querySelector('.app')
   ending: "read mode...",
 });
 ```
@@ -45,21 +42,43 @@ const anchor = document.createElement("a");
 anchor.innerText = "read more...";
 anchor.href = "https://somesite.com";
 ```
-and provide it to param `ending`
+and provide it to param `ending`:
 ```js / ts
 ...
-const stopTruncator = truncator({
+truncator({
   ...
   ending: anchor,
   ...
 });
 ```
-`truncator` counts size of parent element (`.app` in example) and fits `sourceNode` to the parent. 
+`text-truncator` counts size of parent element (`.app` in example) and fits `sourceNode` to the parent. 
 In the result we get truncated text with `ending` instead of extra text.
+
+`text-truncator` listened by resize event for applied every time when page is resized. 
+You can turn this option off by provide in parameter `options` boolean property `once` is true:
+```js / ts
+...
+truncator({
+  ...
+  options: {
+    once: true
+  },
+  ...
+});
+```
+Or you can actually stop `truncator` at all. For that you just call a function retured by `truncator` (closing function) after its launch whenever you need.
+For instance you need to stop it in 5 sec after start:
+```js / ts
+...
+const stopTruncator = truncator({...});
+...
+setTimeout(() => stopTruncator(), 5000);
+});
+```
 
 ## All available parameters
 ```js / ts
-const stopTruncator = truncator({
+truncator({
   sourceNode: ".text", // Required! Use CSS selectors (string) or HTML element with text inside to be truncated.
   sourceAncestor: ".app", // Use CSS selectors (string) or HTML element. By default it equals "body". This is the parent of sourceNode element.
   ending: "read mode...",  // Use CSS selectors (string) or HTML element. By default it equals ... Add instead of truncated text.
@@ -73,17 +92,18 @@ const stopTruncator = truncator({
 ```
 
 ## SPA
-To use in SPA it returns closing function which can be called before a component will be removed from the DOM.
+To use in SPA call closing function mentioned above in unmounted lifecycle method.
 For example you can use it with `React/Hooks`:
 ```js / ts
 ...
 useEffect(() => {
+  const stopTruncator = truncator({...});
   ...
   return () => {
-    stopTruncator()
+    stopTruncator();
     ...
   }
-})
+}, []);
 ...
 ```
 
