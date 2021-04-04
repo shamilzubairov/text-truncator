@@ -1,6 +1,6 @@
 {
   "name": "text-truncator",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Universal library that makes a lot of text truncated in a small parent container.",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
