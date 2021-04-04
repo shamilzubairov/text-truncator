@@ -61,12 +61,12 @@ In the result we get truncated text with `ending` instead of extra text.
 ```js / ts
 const stopTruncator = truncator({
   sourceNode: ".text", // Required! Use CSS selectors (string) or HTML element with text inside to be truncated.
-  sourceAncestor: ".app", // Use CSS selectors (string) or HTML element. By default it uses "body". This is the parent of sourceNode element.
-  ending: "read mode...",  // Use CSS selectors (string) or HTML element. By default it uses ... Add instead of truncated text.
+  sourceAncestor: ".app", // Use CSS selectors (string) or HTML element. By default it equals "body". This is the parent of sourceNode element.
+  ending: "read mode...",  // Use CSS selectors (string) or HTML element. By default it equals ... Add instead of truncated text.
   options: {
-    maxLength: 700, // The maximum number of letters that we want to be shown before truncate. By default it uses Infinity.
-    minCutLength: 100, // The maximum number of letters after which the text completely disappears. By default it uses 0.
-    delay: 250, // Time (in millisec) to delay animation of truncate. Inside itself truncator uses the throttling function. By default it uses 100.
+    maxLength: 700, // The maximum number of letters that we want to be shown before truncate. By default it equals Infinity.
+    minCutLength: 100, // The maximum number of letters after which the text completely disappears. By default it equals 50.
+    delay: 250, // Time (in millisec) to delay animation of truncate. Inside itself truncator uses the throttling function. By default it equals 100.
     once: true // Needs to call truncator just one time without adding listener to resize event. By default it equals false.
   }
 });

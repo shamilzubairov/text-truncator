@@ -33,7 +33,7 @@ export default function truncator({
   let timeout = 0;
 
   const maxLength = options.maxLength || Infinity;
-  const minCutLength = options.minCutLength || 0;
+  const minCutLength = options.minCutLength || 50;
   const delay = options.delay || 100;
   const once = options.once || false;
 

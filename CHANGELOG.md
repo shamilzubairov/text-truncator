@@ -1,6 +1,11 @@
 # Change log
 
-## v1.2.7 (2021-04-1)
+## v1.2.9 (2021-04-4)
+
+### Update default value in options.minCutLength
+- **update value of param options.minCutLength**
+
+## v1.2.7 (2021-04-4)
 
 ### Update README
 
