@@ -2,9 +2,6 @@
 
 Universal library that makes a lot of text truncated in a small parent container.
 
-`text-truncator` listened by resize event for applied every time when page is resized. 
-You can turn this option off by provide in parameter `options` boolean property `once` is true.
-
 [MIT License](LICENSE.txt)
 
 ## Attention!
@@ -33,7 +30,7 @@ For that you use `truncator` as shown further:
 ```js / ts
 import truncator from 'text-truncator'
 ...
-const stopTruncator = truncator({
+truncator({
   sourceNode: ".text", // or just `p` (like a tag) or document.querySelector('.text') - you may provide also HTML element 
   sourceAncestor: ".app", // or just `div` (if its only parent tag) or document.querySelector('.app')
   ending: "read mode...",
@@ -48,18 +45,31 @@ anchor.href = "https://somesite.com";
 and provide it to param `ending`
 ```js / ts
 ...
-const stopTruncator = truncator({
+truncator({
   ...
   ending: anchor,
   ...
 });
 ```
-`truncator` counts size of parent element (`.app` in example) and fits `sourceNode` to the parent. 
+`text-truncator` counts size of parent element (`.app` in example) and fits `sourceNode` to the parent. 
 In the result we get truncated text with `ending` instead of extra text.
+
+`text-truncator` listened by resize event for applied every time when page is resized. 
+You can turn this option off by provide in parameter `options` boolean property `once` is true.
+```js / ts
+...
+truncator({
+  ...
+  options: {
+    once: true
+  },
+  ...
+});
+```
 
 ## All available parameters
 ```js / ts
-const stopTruncator = truncator({
+truncator({
   sourceNode: ".text", // Required! Use CSS selectors (string) or HTML element with text inside to be truncated.
   sourceAncestor: ".app", // Use CSS selectors (string) or HTML element. By default it uses "body". This is the parent of sourceNode element.
   ending: "read mode...",  // Use CSS selectors (string) or HTML element. By default it uses ... Add instead of truncated text.
@@ -78,12 +88,13 @@ For example you can use it with `React/Hooks`:
 ```js / ts
 ...
 useEffect(() => {
+  const stopTruncator = truncator({...});
   ...
   return () => {
-    stopTruncator()
+    stopTruncator();
     ...
   }
-})
+});
 ...
 ```
 
