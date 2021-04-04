@@ -1,5 +1,9 @@
 # Change log
 
+## v1.2.7 (2021-04-1)
+
+### Update README
+
 ## v1.2.6 (2021-04-1)
 
 ### Main params
