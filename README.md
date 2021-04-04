@@ -42,7 +42,7 @@ const anchor = document.createElement("a");
 anchor.innerText = "read more...";
 anchor.href = "https://somesite.com";
 ```
-and provide it to param `ending`
+and provide it to param `ending`:
 ```js / ts
 ...
 truncator({
@@ -55,7 +55,7 @@ truncator({
 In the result we get truncated text with `ending` instead of extra text.
 
 `text-truncator` listened by resize event for applied every time when page is resized. 
-You can turn this option off by provide in parameter `options` boolean property `once` is true.
+You can turn this option off by provide in parameter `options` boolean property `once` is true:
 ```js / ts
 ...
 truncator({
@@ -64,6 +64,15 @@ truncator({
     once: true
   },
   ...
+});
+```
+Or you can actually stop `truncator` at all. For that you just call a function retured by `truncator` (closing function) after its launch whenever you need.
+For instance you need to stop it in 5 sec after start:
+```js / ts
+...
+const stopTruncator = truncator({...});
+...
+setTimeout(() => stopTruncator(), 5000);
 });
 ```
 
@@ -83,7 +92,7 @@ truncator({
 ```
 
 ## SPA
-To use in SPA it returns closing function which can be called before a component will be removed from the DOM.
+To use in SPA call closing function mentioned above in unmounted lifecycle method.
 For example you can use it with `React/Hooks`:
 ```js / ts
 ...
