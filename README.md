@@ -73,7 +73,7 @@ For instance you need to stop it in 5 sec after start:
 const stopTruncator = truncator({...});
 ...
 setTimeout(() => stopTruncator(), 5000);
-});
+...
 ```
 
 ## All available parameters
