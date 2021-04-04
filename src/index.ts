@@ -93,7 +93,7 @@ export default function truncator({
       while (nodeRef.getBoundingClientRect().bottom > ancestorBottomCoords!) {
         const nodeRefBeforeTruncate = nodeRef.innerText;
         nodeRef.innerText = replaceLastWord(reLastWord, nodeRef.innerText);
-        // endless loop protection
+        // infinite loop protection
         if (nodeRefBeforeTruncate.length <= nodeRef.innerText.length) return;
 
         if (minCutLength && nodeRef.innerText.length <= minCutLength) {
