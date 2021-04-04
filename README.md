@@ -57,7 +57,7 @@ const stopTruncator = truncator({
 `truncator` counts size of parent element (`.app` in example) and fits `sourceNode` to the parent. 
 In the result we get truncated text with `ending` instead of extra text.
 
-### Whole banch of params
+### All params
 ```js / ts
 const stopTruncator = truncator({
   sourceNode: ".text", // Required! Use CSS selectors (string) or HTML element with text inside to be truncated.
