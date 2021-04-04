@@ -32,7 +32,7 @@ import truncator from 'text-truncator'
 ...
 truncator({
   sourceNode: ".text", // or just `p` (like a tag) or document.querySelector('.text') - you may provide also HTML element 
-  sourceAncestor: ".app", // or just `div` (if its only parent tag) or document.querySelector('.app')
+  sourceAncestor: ".app", // or just `div` (if it's only parent tag) or document.querySelector('.app')
   ending: "read mode...",
 });
 ```
