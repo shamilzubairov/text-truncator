@@ -1,5 +1,10 @@
 # Change log
 
+## v1.3.0 (2021-04-5)
+
+### Add validation
+- **add correct validation of params in options**
+
 ## v1.2.9 (2021-04-4)
 
 ### Update default value in options.minCutLength

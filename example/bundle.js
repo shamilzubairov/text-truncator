@@ -40,6 +40,7 @@ const getAncestorBottomCoords = (nodeRef, ancestorRef) => {
 };
 
 function truncator({ sourceNode, sourceAncestor = "body", ending = "...", options = {} }) {
+    var _a, _b, _c, _d;
     if (!hasElementCorrectType(sourceNode) || !hasElementCorrectType(sourceAncestor) || !hasElementCorrectType(ending)) {
         console.error(`${sourceNode}, ${sourceAncestor} and ${ending} must be HTMLElement or string`);
         return null;
@@ -57,10 +58,10 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
     ancestorBottomCoords -= reserve;
     let rafId = 0;
     let timeout = 0;
-    const maxLength = options.maxLength || Infinity;
-    const minCutLength = options.minCutLength || 0;
-    const delay = options.delay || 100;
-    const once = options.once || false;
+    const maxLength = (_a = options.maxLength) !== null && _a !== void 0 ? _a : Infinity;
+    const minCutLength = (_b = options.minCutLength) !== null && _b !== void 0 ? _b : 50;
+    const delay = (_c = options.delay) !== null && _c !== void 0 ? _c : 100;
+    const once = (_d = options.once) !== null && _d !== void 0 ? _d : false;
     const sourceEnding = " " + (typeof ending === "string" ? removeSpecChars(ending) : ending.outerHTML); // with tags, for final ending
     const innerEndingStringForRe = getInnerEnding(ending).trim(); // without tags, only for RegExp
     const reLastWord = new RegExp(`(\\s*\\S*)(\\s+${(innerEndingStringForRe)})$`);
@@ -107,7 +108,7 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
             while (nodeRef.getBoundingClientRect().bottom > ancestorBottomCoords) {
                 const nodeRefBeforeTruncate = nodeRef.innerText;
                 nodeRef.innerText = replaceLastWord(reLastWord, nodeRef.innerText);
-                // endless loop protection
+                // infinite loop protection
                 if (nodeRefBeforeTruncate.length <= nodeRef.innerText.length)
                     return;
                 if (minCutLength && nodeRef.innerText.length <= minCutLength) {
@@ -125,13 +126,9 @@ function truncator({ sourceNode, sourceAncestor = "body", ending = "...", option
 const anchor = document.createElement("a");
 anchor.href = "https://ya.ru";
 anchor.target = "_blank";
-anchor.innerHTML = "<>>> read more...";
+anchor.innerHTML = "read more...";
 
 truncator({
     sourceNode: "p",
     ending: anchor,
-    options: {
-      minCutLength: 100
-      // once: true
-    }
 });

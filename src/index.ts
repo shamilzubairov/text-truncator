@@ -32,10 +32,10 @@ export default function truncator({
   let rafId = 0;
   let timeout = 0;
 
-  const maxLength = options.maxLength || Infinity;
-  const minCutLength = options.minCutLength || 50;
-  const delay = options.delay || 100;
-  const once = options.once || false;
+  const maxLength = options.maxLength ?? Infinity;
+  const minCutLength = options.minCutLength ?? 50;
+  const delay = options.delay ?? 100;
+  const once = options.once ?? false;
 
   const sourceEnding = " " + (typeof ending === "string" ? removeSpecChars(ending) : ending.outerHTML); // with tags, for final ending
 
